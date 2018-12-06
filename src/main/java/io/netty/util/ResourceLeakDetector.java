@@ -132,14 +132,6 @@ public class ResourceLeakDetector<T> {
     }
 
     /**
-     * @deprecated Use {@link #setLevel(Level)} instead.
-     */
-    @Deprecated
-    public static void setEnabled(boolean enabled) {
-        setLevel(enabled? Level.SIMPLE : Level.DISABLED);
-    }
-
-    /**
      * Returns {@code true} if resource leak detection is enabled.
      */
     public static boolean isEnabled() {
@@ -174,36 +166,6 @@ public class ResourceLeakDetector<T> {
     private final int samplingInterval;
 
     /**
-     * @deprecated use {@link ResourceLeakDetectorFactory#newResourceLeakDetector(Class, int, long)}.
-     */
-    @Deprecated
-    public ResourceLeakDetector(Class<?> resourceType) {
-        this(simpleClassName(resourceType));
-    }
-
-    /**
-     * @deprecated use {@link ResourceLeakDetectorFactory#newResourceLeakDetector(Class, int, long)}.
-     */
-    @Deprecated
-    public ResourceLeakDetector(String resourceType) {
-        this(resourceType, DEFAULT_SAMPLING_INTERVAL, Long.MAX_VALUE);
-    }
-
-    /**
-     * @deprecated Use {@link ResourceLeakDetector#ResourceLeakDetector(Class, int)}.
-     * <p>
-     * This should not be used directly by users of {@link ResourceLeakDetector}.
-     * Please use {@link ResourceLeakDetectorFactory#newResourceLeakDetector(Class)}
-     * or {@link ResourceLeakDetectorFactory#newResourceLeakDetector(Class, int, long)}
-     *
-     * @param maxActive This is deprecated and will be ignored.
-     */
-    @Deprecated
-    public ResourceLeakDetector(Class<?> resourceType, int samplingInterval, long maxActive) {
-        this(resourceType, samplingInterval);
-    }
-
-    /**
      * This should not be used directly by users of {@link ResourceLeakDetector}.
      * Please use {@link ResourceLeakDetectorFactory#newResourceLeakDetector(Class)}
      * or {@link ResourceLeakDetectorFactory#newResourceLeakDetector(Class, int, long)}
@@ -226,18 +188,6 @@ public class ResourceLeakDetector<T> {
 
         this.resourceType = resourceType;
         this.samplingInterval = samplingInterval;
-    }
-
-    /**
-     * Creates a new {@link ResourceLeak} which is expected to be closed via {@link ResourceLeak#close()} when the
-     * related resource is deallocated.
-     *
-     * @return the {@link ResourceLeak} or {@code null}
-     * @deprecated use {@link #track(Object)}
-     */
-    @Deprecated
-    public final ResourceLeak open(T obj) {
-        return track0(obj);
     }
 
     /**
@@ -333,16 +283,9 @@ public class ResourceLeakDetector<T> {
                 resourceType, PROP_LEVEL, Level.ADVANCED.name().toLowerCase(), simpleClassName(this));
     }
 
-    /**
-     * @deprecated This method will no longer be invoked by {@link ResourceLeakDetector}.
-     */
-    @Deprecated
-    protected void reportInstancesLeak(String resourceType) {
-    }
-
     @SuppressWarnings("deprecation")
     private static final class DefaultResourceLeak<T>
-            extends WeakReference<Object> implements ResourceLeakTracker<T>, ResourceLeak {
+            extends WeakReference<Object> implements ResourceLeakTracker<T> {
 
         @SuppressWarnings("unchecked") // generics and updaters do not mix.
         private static final AtomicReferenceFieldUpdater<DefaultResourceLeak<?>, Record> headUpdater =
@@ -450,7 +393,6 @@ public class ResourceLeakDetector<T> {
             return allLeaks.remove(this);
         }
 
-        @Override
         public boolean close() {
             if (allLeaks.remove(this)) {
                 // Call clear so the reference is not even enqueued.
@@ -461,7 +403,6 @@ public class ResourceLeakDetector<T> {
             return false;
         }
 
-        @Override
         public boolean close(T trackedObject) {
             // Ensure that the object that was tracked is the same as the one that was passed to close(...).
             assert trackedHash == System.identityHashCode(trackedObject);
@@ -494,7 +435,6 @@ public class ResourceLeakDetector<T> {
          * <b>It is the caller's responsibility to ensure that this synchronization will not cause deadlock.</b>
          *
          * @param ref the reference. If {@code null}, this method has no effect.
-         * @see java.lang.ref.Reference#reachabilityFence
          */
         private static void reachabilityFence0(Object ref) {
             if (ref != null) {

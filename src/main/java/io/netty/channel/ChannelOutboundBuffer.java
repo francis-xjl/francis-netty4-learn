@@ -709,11 +709,6 @@ public final class ChannelOutboundBuffer {
         PromiseNotificationUtil.tryFailure(promise, cause, promise instanceof VoidChannelPromise ? null : logger);
     }
 
-    @Deprecated
-    public void recycle() {
-        // NOOP
-    }
-
     public long totalPendingWriteBytes() {
         return totalPendingSize;
     }

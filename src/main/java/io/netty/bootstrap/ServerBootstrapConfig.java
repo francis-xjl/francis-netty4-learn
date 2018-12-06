@@ -39,7 +39,7 @@ public final class ServerBootstrapConfig extends AbstractBootstrapConfig<ServerB
      */
     @SuppressWarnings("deprecation")
     public EventLoopGroup childGroup() {
-        return bootstrap.childGroup();
+        return bootstrap.config().childGroup();
     }
 
     /**

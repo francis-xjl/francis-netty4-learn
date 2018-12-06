@@ -291,17 +291,6 @@ public class ServerBootstrap extends AbstractBootstrap<ServerBootstrap, ServerCh
         return new ServerBootstrap(this);
     }
 
-    /**
-     * Return the configured {@link EventLoopGroup} which will be used for the child channels or {@code null}
-     * if non is configured yet.
-     *
-     * @deprecated Use {@link #config()} instead.
-     */
-    @Deprecated
-    public EventLoopGroup childGroup() {
-        return childGroup;
-    }
-
     final ChannelHandler childHandler() {
         return childHandler;
     }

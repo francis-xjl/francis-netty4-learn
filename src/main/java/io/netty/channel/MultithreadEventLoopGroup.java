@@ -90,10 +90,4 @@ public abstract class MultithreadEventLoopGroup extends MultithreadEventExecutor
     public ChannelFuture register(ChannelPromise promise) {
         return next().register(promise);
     }
-
-    @Deprecated
-    @Override
-    public ChannelFuture register(Channel channel, ChannelPromise promise) {
-        return next().register(channel, promise);
-    }
 }

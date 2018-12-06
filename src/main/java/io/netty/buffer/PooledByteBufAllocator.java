@@ -164,7 +164,8 @@ public class PooledByteBufAllocator extends AbstractByteBufAllocator implements 
 
     @SuppressWarnings("deprecation")
     public PooledByteBufAllocator(int nHeapArena, int nDirectArena, int pageSize, int maxOrder) {
-        this(false, nHeapArena, nDirectArena, pageSize, maxOrder);
+        this(false, nHeapArena, nDirectArena, pageSize, maxOrder,
+                DEFAULT_TINY_CACHE_SIZE, DEFAULT_SMALL_CACHE_SIZE, DEFAULT_NORMAL_CACHE_SIZE);
     }
 
     /**
@@ -404,23 +405,6 @@ public class PooledByteBufAllocator extends AbstractByteBufAllocator implements 
     @Override
     public boolean isDirectBufferPooled() {
         return directArenas != null;
-    }
-
-    /**
-     * Returns {@code true} if the calling {@link Thread} has a {@link ThreadLocal} cache for the allocated
-     * buffers.
-     */
-    @Deprecated
-    public boolean hasThreadLocalCache() {
-        return threadCache.isSet();
-    }
-
-    /**
-     * Free all cached buffers for the calling {@link Thread}.
-     */
-    @Deprecated
-    public void freeThreadLocalCache() {
-        threadCache.remove();
     }
 
     final class PoolThreadLocalCache extends FastThreadLocal<PoolThreadCache> {

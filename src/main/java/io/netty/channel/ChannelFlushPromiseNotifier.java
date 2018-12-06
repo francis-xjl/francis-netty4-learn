@@ -49,14 +49,6 @@ public final class ChannelFlushPromiseNotifier {
     }
 
     /**
-     * @deprecated use {@link #add(ChannelPromise, long)}
-     */
-    @Deprecated
-    public ChannelFlushPromiseNotifier add(ChannelPromise promise, int pendingDataSize) {
-        return add(promise, (long) pendingDataSize);
-    }
-
-    /**
      * Add a {@link ChannelPromise} to this {@link ChannelFlushPromiseNotifier} which will be notified after the given
      * {@code pendingDataSize} was reached.
      */
@@ -89,13 +81,6 @@ public final class ChannelFlushPromiseNotifier {
     }
 
     /**
-     * Return the current write counter of this {@link ChannelFlushPromiseNotifier}
-     */
-    public long writeCounter() {
-        return writeCounter;
-    }
-
-    /**
      * Notify all {@link ChannelFuture}s that were registered with {@link #add(ChannelPromise, int)} and
      * their pendingDatasize is smaller after the current writeCounter returned by {@link #writeCounter()}.
      *
@@ -105,14 +90,6 @@ public final class ChannelFlushPromiseNotifier {
     public ChannelFlushPromiseNotifier notifyPromises() {
         notifyPromises0(null);
         return this;
-    }
-
-    /**
-     * @deprecated use {@link #notifyPromises()}
-     */
-    @Deprecated
-    public ChannelFlushPromiseNotifier notifyFlushFutures() {
-        return notifyPromises();
     }
 
     /**
@@ -140,14 +117,6 @@ public final class ChannelFlushPromiseNotifier {
             }
         }
         return this;
-    }
-
-    /**
-     * @deprecated use {@link #notifyPromises(Throwable)}
-     */
-    @Deprecated
-    public ChannelFlushPromiseNotifier notifyFlushFutures(Throwable cause) {
-        return notifyPromises(cause);
     }
 
     /**
@@ -180,14 +149,6 @@ public final class ChannelFlushPromiseNotifier {
             }
         }
         return this;
-    }
-
-    /**
-     * @deprecated use {@link #notifyPromises(Throwable, Throwable)}
-     */
-    @Deprecated
-    public ChannelFlushPromiseNotifier notifyFlushFutures(Throwable cause1, Throwable cause2) {
-        return notifyPromises(cause1, cause2);
     }
 
     private void notifyPromises0(Throwable cause) {

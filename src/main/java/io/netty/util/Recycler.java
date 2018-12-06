@@ -166,24 +166,6 @@ public abstract class Recycler<T> {
         return (T) handle.value;
     }
 
-    /**
-     * @deprecated use {@link Handle#recycle(Object)}.
-     */
-    @Deprecated
-    public final boolean recycle(T o, Handle<T> handle) {
-        if (handle == NOOP_HANDLE) {
-            return false;
-        }
-
-        DefaultHandle<T> h = (DefaultHandle<T>) handle;
-        if (h.stack.parent != this) {
-            return false;
-        }
-
-        h.recycle(o);
-        return true;
-    }
-
     final int threadLocalCapacity() {
         return threadLocal.get().elements.length;
     }

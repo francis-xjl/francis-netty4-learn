@@ -180,14 +180,6 @@ public abstract class AbstractChannel extends DefaultAttributeMap implements Cha
         return localAddress;
     }
 
-    /**
-     * @deprecated no use-case for this.
-     */
-    @Deprecated
-    protected void invalidateLocalAddress() {
-        localAddress = null;
-    }
-
     @Override
     public SocketAddress remoteAddress() {
         SocketAddress remoteAddress = this.remoteAddress;
@@ -202,14 +194,6 @@ public abstract class AbstractChannel extends DefaultAttributeMap implements Cha
             }
         }
         return remoteAddress;
-    }
-
-    /**
-     * @deprecated no use-case for this.
-     */
-    @Deprecated
-    protected void invalidateRemoteAddress() {
-        remoteAddress = null;
     }
 
     @Override

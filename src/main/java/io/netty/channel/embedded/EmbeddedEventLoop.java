@@ -131,13 +131,6 @@ final class EmbeddedEventLoop extends AbstractScheduledEventExecutor implements 
         return promise;
     }
 
-    @Deprecated
-    @Override
-    public ChannelFuture register(Channel channel, ChannelPromise promise) {
-        channel.unsafe().register(this, promise);
-        return promise;
-    }
-
     @Override
     public boolean inEventLoop() {
         return true;

@@ -58,12 +58,6 @@ public class AdaptiveRecvByteBufAllocator extends DefaultMaxMessagesRecvByteBufA
         }
     }
 
-    /**
-     * @deprecated There is state for {@link #maxMessagesPerRead()} which is typically based upon channel type.
-     */
-    @Deprecated
-    public static final AdaptiveRecvByteBufAllocator DEFAULT = new AdaptiveRecvByteBufAllocator();
-
     private static int getSizeTableIndex(final int size) {
         for (int low = 0, high = SIZE_TABLE.length - 1;;) {
             if (high < low) {

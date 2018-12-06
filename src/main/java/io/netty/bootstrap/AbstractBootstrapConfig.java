@@ -15,10 +15,7 @@
  */
 package io.netty.bootstrap;
 
-import io.netty.channel.Channel;
-import io.netty.channel.ChannelHandler;
-import io.netty.channel.ChannelOption;
-import io.netty.channel.EventLoopGroup;
+import io.netty.channel.*;
 import io.netty.util.AttributeKey;
 import io.netty.util.internal.ObjectUtil;
 import io.netty.util.internal.StringUtil;
@@ -76,7 +73,6 @@ public abstract class AbstractBootstrapConfig<B extends AbstractBootstrap<B, C>,
     /**
      * Returns the configured {@link EventLoopGroup} or {@code null} if non is configured yet.
      */
-    @SuppressWarnings("deprecation")
     public final EventLoopGroup group() {
         return bootstrap.group();
     }

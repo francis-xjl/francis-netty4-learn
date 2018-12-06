@@ -81,20 +81,6 @@ public abstract class SingleThreadEventLoop extends SingleThreadEventExecutor im
         return promise;
     }
 
-    @Deprecated
-    @Override
-    public ChannelFuture register(final Channel channel, final ChannelPromise promise) {
-        if (channel == null) {
-            throw new NullPointerException("channel");
-        }
-        if (promise == null) {
-            throw new NullPointerException("promise");
-        }
-
-        channel.unsafe().register(this, promise);
-        return promise;
-    }
-
     /**
      * Adds a task to be run once at the end of next (or current) {@code eventloop} iteration.
      *
