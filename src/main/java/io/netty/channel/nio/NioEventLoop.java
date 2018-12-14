@@ -457,7 +457,7 @@ public final class NioEventLoop extends SingleThreadEventLoop {
                 cancelledKeys = 0;
                 needsToSelectAgain = false;
                 final int ioRatio = this.ioRatio;
-                if (ioRatio == 100) {
+                if (ioRatio == 100) { // ioRatio定义成100的含义： processSelectedKeys后会立即执行所有的任务
                     try {
                         processSelectedKeys();
                     } finally {
@@ -471,6 +471,7 @@ public final class NioEventLoop extends SingleThreadEventLoop {
                     } finally {
                         // Ensure we always run tasks.
                         final long ioTime = System.nanoTime() - ioStartTime;
+                        // TODO 问题：为什么需要计算这个timeoutNanos ?
                         runAllTasks(ioTime * (100 - ioRatio) / ioRatio);
                     }
                 }

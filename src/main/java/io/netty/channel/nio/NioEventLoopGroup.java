@@ -48,6 +48,7 @@ public class NioEventLoopGroup extends MultithreadEventLoopGroup {
      * {@link SelectorProvider} which is returned by {@link SelectorProvider#provider()}.
      */
     public NioEventLoopGroup(int nThreads) {
+        // TODO 问题1：nThreads怎么起作用，多个线程以什么样的方式loop?
         this(nThreads, (Executor) null);
     }
 

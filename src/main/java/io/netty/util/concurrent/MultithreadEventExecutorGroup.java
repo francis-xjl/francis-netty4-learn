@@ -73,9 +73,11 @@ public abstract class MultithreadEventExecutorGroup extends AbstractEventExecuto
         }
 
         if (executor == null) {
+            // 默认情况下每个任务对应一个线程
             executor = new ThreadPerTaskExecutor(newDefaultThreadFactory());
         }
 
+        // TODO 问题2: 创建nThreads个EventExecutor后，那EventExecutor具体怎么运转？
         children = new EventExecutor[nThreads];
 
         for (int i = 0; i < nThreads; i ++) {
